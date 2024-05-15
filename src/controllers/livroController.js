@@ -1,5 +1,5 @@
-import { autor } from "../models/Autor.js";
 import livro from "../models/Livro.js";
+import { autor } from "../models/Autor.js";
 
 class LivroController {
 
@@ -26,7 +26,7 @@ class LivroController {
     const novoLivro = req.body;
     try {
       const autorEncontrado = await autor.findById(novoLivro.autor);
-      const livroCompleto = {...novoLivro, autor: { ...autorEncontrado._doc}};
+      const livroCompleto = { ...novoLivro, autor: { ...autorEncontrado._doc }};
       const livroCriado = await livro.create(livroCompleto);
       res.status(201).json({ message: "criado com sucesso", livro: livroCriado });
     } catch (erro) {
@@ -59,7 +59,7 @@ class LivroController {
     try {
       const livrosPorEditora = await livro.find({ editora: editora });
       res.status(200).json(livrosPorEditora);
-    } catch(erro) {
+    } catch (erro) {
       res.status(500).json({ message: `${erro.message} - falha na busca` });
     }
   }
